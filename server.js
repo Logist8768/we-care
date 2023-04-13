@@ -17,6 +17,10 @@ app.use('/peerjs', PeerServer)
 //   res.render('room', { roomId: req.params.room })
 // })
 
+app.get('', (req, res) => {
+  res.json({ 'msg': "All Done" })
+})
+
 app.get('/bus-1', (req, res) => {
   res.render('room', { roomId: "bus-1" })
 })
