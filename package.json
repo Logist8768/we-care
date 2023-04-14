@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js && peerjs --port 3001",
-    "devStart": "nodemon server.js && peerjs --port 9000"
+    "devStart": "nodemon server.js && peerjs --port 443"
   },
   "keywords": [],
   "author": "",
