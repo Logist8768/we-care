@@ -17,7 +17,7 @@ app.use('/peerjs', PeerServer)
 //   res.render('room', { roomId: req.params.room })
 // })
 
-app.get('', (req, res) => {
+app.get('/', (req, res) => {
   res.json({ 'msg': "All Done" })
 })
 
