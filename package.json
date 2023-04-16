@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js && peerjs --port 443",
-    "devStartPeer": "nodemon server.js && peerjs --port 443",
+    "start": "node server.js && peerjs --port 9000",
+    "devStartPeer": "nodemon server.js && peerjs --port 9000",
     "devStart": "nodemon server.js"
   },
   "keywords": [],
