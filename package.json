@@ -8,6 +8,9 @@
     "devStartPeer": "nodemon server.js && peerjs --port 9000",
     "devStart": "nodemon server.js"
   },
+  "engines": {
+    "node": "17.4.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
