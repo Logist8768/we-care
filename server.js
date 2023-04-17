@@ -1,3 +1,6 @@
+const { WebSocketServer } = require('ws');
+module.exports.WebSocketServer = WebSocketServer;
+
 const express = require('express')
 const app = express()
 // var ExpressPeerServer = require("peer").ExpressPeerServer;
