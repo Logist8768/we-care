@@ -1,52 +1,39 @@
-const { WebSocketServer } = require('ws');
-module.exports.WebSocketServer = WebSocketServer;
 
 const express = require('express')
 const app = express()
-// var ExpressPeerServer = require("peer").ExpressPeerServer;
 const server = require('http').Server(app)
-const io = require('socket.io')(server)
-// const { v4: uuidV4 } = require('uuid')
-const { PeerServer } = require("peer");
+// const io = require('socket.io')(server)
+// access environment variables
+require("dotenv").config();
 
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
-// var options = {
-//   debug: true,
-//   allow_discovery: true,
-// };
-// let peerServer = ExpressPeerServer(server, options);
-// app.use("/peerjs", peerServer);
-app.use('/peerjs', PeerServer)
-
-
-// app.get('/', (req, res) => {
-//   res.redirect(`/${uuidV4()}`)
-// })
-
-// app.get('/:room', (req, res) => {
-//   res.render('room', { roomId: req.params.room })
-// })
+// connect to database
+require("./config/database");
+//routes 
+const userRouter = require('./routes/user_route');
+const { loginValidator } = require('./utils/validators/authValidator');
+const { login } = require('./controllers/auth_controller');
+const authRouter = require('./routes/auth_route');
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.json({ 'msg': "All Done" })
 })
 
-app.get('/bus-1', (req, res) => {
-  res.render('room', { roomId: "bus-1" })
-})
+app.use('/api/users', userRouter)
+app.use("/api/auth", authRouter);
 
-io.on('connection', socket => {
-  console.log('io  connection');
-  socket.on('join-room', (roomId, userId) => {
-    console.log(roomId, userId);
-    socket.join(roomId)
-    socket.to(roomId).broadcast.emit('user-connected', userId)
 
-    socket.on('disconnect', () => {
-      socket.to(roomId).broadcast.emit('user-disconnected', userId)
-    })
-  })
-})
+// io.on('connection', socket => {
+//   console.log('io  connection');
+//   socket.on('join-room', (roomId, userId) => {
+//     console.log(roomId, userId);
+//     socket.join(roomId)
+//     socket.to(roomId).broadcast.emit('user-connected', userId)
 
-server.listen(process.env.PORT || 3000)
+//     socket.on('disconnect', () => {
+//       socket.to(roomId).broadcast.emit('user-disconnected', userId)
+//     })
+//   })
+// })
+
+server.listen(process.env.PORT || 8000)
