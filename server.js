@@ -13,6 +13,9 @@ const userRouter = require('./routes/user_route');
 const { loginValidator } = require('./utils/validators/authValidator');
 const { login } = require('./controllers/auth_controller');
 const authRouter = require('./routes/auth_route');
+var cors = require('cors')
+app.use(cors());
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
