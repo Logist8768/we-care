@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const { randomBytes, scrypt } = require("crypto");
 const { promisify } = require("util");
+const Bus = require("../models/bus");
 
 const _scrypt = promisify(scrypt);
 
@@ -18,7 +19,18 @@ exports.createUser = async (req, res) => {
     user.password = hashedPassword;
 
     User.create(user)
-        .then((user) => {
+        .then(async (user) => {
+            try {
+                console.log(user);
+
+                let bus = await Bus.findOne({ "_id": user.bus_id });
+                console.log(bus);
+                bus.users.push(user._id.toString());
+                bus.save();
+            } catch (e) {
+                console.log(e);
+            }
+
             res.send(user)
         })
         .catch((err) => {
@@ -40,7 +52,7 @@ exports.allUsers = async (req, res) => {
     let { page, limit } = req.query;
     limit = limit ?? 10;
     page = (page ?? 1) - 1;
-    let users = await User.find().skip(page * limit).limit(limit);
+    let users = await User.find().skip(page * limit).limit(limit).populate({ path: "bus_id" });
     let usersCount = (await User.find()).length;
     res.setHeader("users_count", usersCount);
     res.send(users);
@@ -49,7 +61,7 @@ exports.allUsers = async (req, res) => {
 exports.getUserById = async (req, res) => {
     try {
         let { id } = req.params;
-        let users = await User.find({ "_id": id });
+        let users = await User.find({ "_id": id }).populate({ path: "bus_id" });;
         if (users && users.length > 0) return res.send(users[0]);
         res.send({ 'message': "invalid user id" });
     } catch (_) {

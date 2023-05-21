@@ -10,8 +10,9 @@ require("dotenv").config();
 require("./config/database");
 //routes 
 const userRouter = require('./routes/user_route');
-const { loginValidator } = require('./utils/validators/authValidator');
-const { login } = require('./controllers/auth_controller');
+const busRouter = require('./routes/bus_route');
+// const { loginValidator } = require('./utils/validators/authValidator');
+// const { login } = require('./controllers/auth_controller');
 const authRouter = require('./routes/auth_route');
 var cors = require('cors')
 app.use(cors());
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', userRouter)
 app.use("/api/auth", authRouter);
+app.use("/api/buses", busRouter);
 
 
 // io.on('connection', socket => {

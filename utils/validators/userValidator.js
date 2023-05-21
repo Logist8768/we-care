@@ -11,7 +11,7 @@ exports.createUserValidator = [
     .withMessage("full_name is not allowed to be empty")
     .isLength({ max: 30 })
     .withMessage(
-      "full_name length must be less than or equal to 10 characters long"
+      "full_name length must be less than or equal to 30 characters long"
     )
     .isLength({ min: 4 })
     .withMessage("firstname length must be at least 3 characters long"),
