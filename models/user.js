@@ -37,6 +37,10 @@ const UserSchema = new mongoose.Schema(
             default: false,
         },
 
+        bus_id: { type: mongoose.SchemaTypes.ObjectId, ref: "Bus", require: true },
+
+
+
 
     },
     { timestamps: true }
